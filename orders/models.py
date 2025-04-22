@@ -13,16 +13,15 @@ class Order(models.Model):
     DELIVERY_CHOICES = (
         ('RETRAIT', 'Retrait magasin'),
         ('LIVRAISON', 'Livraison'),
-        description = models.TextField(blank=True, null=True),
-
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.PositiveIntegerField()
     is_illegal = models.BooleanField(default=False)
     delivery_method = models.CharField(max_length=10, choices=DELIVERY_CHOICES)
+    description = models.TextField(blank=True, null=True)  # ✅ Description bien placée ici
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Commande de {self.user.username} - {self.product.name}"
+        return f"Commande de {self.user.username} - {self.product.name if self.product else 'Description : ' + (self.description or 'Aucune')}"
