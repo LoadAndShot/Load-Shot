@@ -6,7 +6,7 @@ body {
     background-color: #121212;
     color: #e0e0e0;
     font-family: 'Orbitron', sans-serif;
-    background-image: url('https://cdn.pixabay.com/photo/2016/11/22/19/32/guns-1853519_1280.jpg');
+    background-image: url('/static/images/logo.png'); /* TEMPORAIRE, remplace par ton fond si besoin */
     background-size: cover;
     background-position: center;
     animation: fadeIn 1s ease-in-out;
@@ -56,6 +56,7 @@ a:hover, .btn:hover {
 .header img:hover {
     transform: scale(1.05);
 }
+
 .container {
     max-width: 600px;
     margin: 100px auto;
@@ -75,21 +76,4 @@ a:hover, .btn:hover {
     display: flex;
     justify-content: center;
     gap: 20px;
-}
-
-.btn {
-    display: inline-block;
-    margin: 0;
-    padding: 12px 25px;
-    background-color: #d32f2f;
-    color: white;
-    text-decoration: none;
-    border-radius: 20px;
-    transition: 0.3s ease;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.btn:hover {
-    background-color: #9a0007;
-    box-shadow: 0 0 15px rgba(255, 23, 68, 0.8);
 }
