@@ -20,8 +20,9 @@ class Order(models.Model):
     quantity = models.PositiveIntegerField()
     is_illegal = models.BooleanField(default=False)
     delivery_method = models.CharField(max_length=10, choices=DELIVERY_CHOICES)
-    description = models.TextField(blank=True, null=True)  # ✅ Description bien placée ici
+    description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Commande de {self.user.username} - {self.product.name if self.product else 'Description : ' + (self.description or 'Aucune')}"
+        return f"Commande de {self.user.username} - {self.product.name if self.product else 'Pas de produit'}"
+
