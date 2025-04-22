@@ -34,3 +34,18 @@ def logout_view(request):
 def dashboard_view(request):
     orders = Order.objects.filter(user=request.user)
     return render(request, 'dashboard.html', {'orders': orders})
+from .forms import OrderForm
+
+@login_required
+def create_order_view(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.user = request.user
+            order.description = request.POST.get('description')
+            order.save()
+            return redirect('dashboard')
+    else:
+        form = OrderForm()
+    return render(request, 'create_order.html', {'form': form})
