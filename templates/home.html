@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-    <!-- Logo uniquement sur la page d'accueil -->
     <div class="header">
         <a href="{% url 'home' %}">
             <img src="{% static 'images/logo.png' %}" alt="Load&Shot Logo">
@@ -21,7 +20,6 @@
             Livraison discrète. Qualité garantie.
         </p>
 
-        <!-- Boutons centrés -->
         <div class="button-group">
             <a class="btn" href="{% url 'login' %}">Se connecter</a>
             <a class="btn" href="{% url 'register' %}">Créer un compte</a>
