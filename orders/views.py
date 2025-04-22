@@ -49,3 +49,6 @@ def create_order_view(request):
     else:
         form = OrderForm()
     return render(request, 'create_order.html', {'form': form})
+    def home_view(request):
+    return render(request, 'home.html')
+
