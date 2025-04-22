@@ -6,9 +6,6 @@ body {
     background-color: #121212;
     color: #e0e0e0;
     font-family: 'Orbitron', sans-serif;
-    background-image: url('https://cdn.pixabay.com/photo/2016/11/22/19/32/guns-1853519_1280.jpg');
-    background-size: cover;
-    background-position: center;
     animation: fadeIn 1s ease-in-out;
 }
 
@@ -31,19 +28,21 @@ a, .btn {
     background-color: #d32f2f;
     color: white;
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 20px; /* ✅ Arrondi */
     transition: 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 a:hover, .btn:hover {
     background-color: #9a0007;
+    box-shadow: 0 0 15px rgba(255, 23, 68, 0.8); /* ✅ Glow rouge au hover */
 }
 
 .container {
     max-width: 600px;
     margin: 80px auto;
     padding: 20px;
-    background-color: rgba(18, 18, 18, 0.85);
+    background-color: rgba(18, 18, 18, 0.9);
     border-radius: 12px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
     text-align: center;
@@ -69,29 +68,13 @@ button {
     border: none;
     padding: 10px 20px;
     color: white;
-    border-radius: 5px;
+    border-radius: 20px; /* ✅ Arrondi */
     cursor: pointer;
     transition: 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
     background-color: #9a0007;
+    box-shadow: 0 0 15px rgba(255, 23, 68, 0.8); /* ✅ Glow rouge au hover */
 }
-
-/* ✅ Style pour le logo */
-.header {
-    text-align: center;
-    padding: 20px 0;
-}
-
-.header img {
-    max-width: 150px;
-    height: auto;
-    filter: drop-shadow(0 0 10px rgba(255, 23, 68, 0.7));
-    transition: 0.3s ease;
-}
-
-.header img:hover {
-    transform: scale(1.05);
-}
-
