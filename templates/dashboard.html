@@ -3,23 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Mon espace - Load&Shot</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>Bienvenue {{ request.user.username }}</h1>
-    <p><a href="{% url 'logout' %}">Se déconnecter</a></p>
+    <div class="container">
+        <h1>Bienvenue {{ request.user.username }}</h1>
+        <p><a class="btn" href="{% url 'logout' %}">Se déconnecter</a></p>
+        <p><a class="btn" href="{% url 'create_order' %}">Passer une nouvelle commande</a></p>
 
-    <!-- 🔥 Le bouton pour passer une commande -->
-    <p><a href="{% url 'create_order' %}">Passer une nouvelle commande</a></p>
-
-    <h2>Mes commandes</h2>
-    {% if orders %}
-        <ul>
-            {% for order in orders %}
-                <li>{{ order.product.name }} x{{ order.quantity }} - {{ order.created_at }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Pas encore de commandes.</p>
-    {% endif %}
+        <h2>Mes commandes</h2>
+        {% if orders %}
+            <ul>
+                {% for order in orders %}
+                    <li>
+                        {{ order.product.name if order.product else order.description }} 
+                        x{{ order.quantity }} - {{ order.created_at }}
+                        ({{ 'Illégal' if order.is_illegal else 'Légal' }} - {{ order.delivery_method }})
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Pas encore de commandes.</p>
+        {% endif %}
+    </div>
 </body>
 </html>
+
