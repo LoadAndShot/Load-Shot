@@ -1,5 +1,25 @@
-staticfiles/
+# Django / Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.sqlite3
 db.sqlite3
+
+# Environnement virtuel (parfois nommé .venv ou venv)
+.venv/
+venv/
+
+# Static files collectés par Django (pas besoin de les push)
+staticfiles/
+
+# Fichiers de config sensibles
 .env
+
+# VSCode / IDE divers
+.vscode/
+.idea/
+
+# Système
+.DS_Store
+Thumbs.db
