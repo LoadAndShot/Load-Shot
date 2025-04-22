@@ -17,9 +17,19 @@
             <ul>
                 {% for order in orders %}
                     <li>
-                        {{ order.product.name if order.product else order.description }} 
+                        {% if order.product %}
+                            {{ order.product.name }}
+                        {% else %}
+                            {{ order.description }}
+                        {% endif %}
                         x{{ order.quantity }} - {{ order.created_at }}
-                        ({{ 'Illégal' if order.is_illegal else 'Légal' }} - {{ order.delivery_method }})
+                        (
+                        {% if order.is_illegal %}
+                            Illégal
+                        {% else %}
+                            Légal
+                        {% endif %}
+                        - {{ order.delivery_method }})
                     </li>
                 {% endfor %}
             </ul>
@@ -29,4 +39,3 @@
     </div>
 </body>
 </html>
-
