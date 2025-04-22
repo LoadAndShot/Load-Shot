@@ -1,1 +1,66 @@
+/* static/css/style.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Arial', sans-serif;
+    background-image: url('https://cdn.pixabay.com/photo/2016/11/22/19/32/guns-1853519_1280.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+h1, h2 {
+    color: #ff1744;
+    text-shadow: 2px 2px 4px black;
+}
+
+a, .btn {
+    display: inline-block;
+    margin: 15px;
+    padding: 12px 25px;
+    background-color: #d32f2f;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+a:hover, .btn:hover {
+    background-color: #9a0007;
+}
+
+form {
+    background-color: rgba(18, 18, 18, 0.85);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 50px auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #333;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #d32f2f;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: #9a0007;
+}
 
