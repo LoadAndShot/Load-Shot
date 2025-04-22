@@ -54,6 +54,7 @@ def create_order_view(request):
             order.user = request.user
             order.description = request.POST.get('description')
             order.save()
+            send_discord_order(order)
             import discord
 import os
 
