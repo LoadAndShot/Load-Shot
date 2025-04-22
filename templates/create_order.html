@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Passer une commande - Load&Shot</title>
+</head>
+<body>
+    <h1>Passer une commande</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <label for="description">Description de la commande (ex : AK-47 x2) :</label><br>
+        <textarea name="description" rows="4" cols="50"></textarea><br><br>
+        <button type="submit">Envoyer la commande</button>
+    </form>
+
+    <p><a href="{% url 'dashboard' %}">Retour au dashboard</a></p>
+</body>
+</html>
