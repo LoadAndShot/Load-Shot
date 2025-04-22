@@ -5,44 +5,23 @@
     <title>Load&Shot - Accueil</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-    <style>
-        body {
-            background-color: #121212;
-            color: #e0e0e0;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 100px;
-            background-image: url('https://cdn.pixabay.com/photo/2016/11/22/19/32/guns-1853519_1280.jpg'); /* Image ambiance, tu peux la changer */
-            background-size: cover;
-            background-position: center;
-        }
-        h1 {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1.5em;
-        }
-        .btn {
-            display: inline-block;
-            margin: 15px;
-            padding: 15px 30px;
-            background-color: #d32f2f;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-        .btn:hover {
-            background-color: #9a0007;
-        }
-    </style>
 </head>
 <body>
-    <h1>Load&Shot</h1>
-    <p>Spécialiste de la vente légale et illégale d'armes.<br>Livraison discrète. Qualité garantie.</p>
-    <a class="btn" href="{% url 'login' %}">Se connecter</a>
-    <a class="btn" href="{% url 'register' %}">Créer un compte</a>
+    <!-- 🟥 Logo Load&Shot -->
+    <div class="header">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="Load&Shot Logo">
+        </a>
+    </div>
+
+    <!-- 🟢 Contenu de l'accueil -->
+    <div class="container">
+        <h1>Load&Shot</h1>
+        <p>Spécialiste de la vente légale et illégale d'armes.<br>Livraison discrète. Qualité garantie.</p>
+        <div>
+            <a class="btn" href="{% url 'login' %}">Se connecter</a>
+            <a class="btn" href="{% url 'register' %}">Créer un compte</a>
+        </div>
+    </div>
 </body>
 </html>
