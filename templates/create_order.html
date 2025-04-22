@@ -1,21 +1,49 @@
-<<!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Passer une commande - Load&Shot</title>
-    {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div class="container">
         <h1>Passer une commande</h1>
-        <form method="post">
+
+        <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <label for="description">Description de la commande (ex : AK-47 x2) :</label>
-            <textarea name="description" rows="4" cols="50"></textarea>
-            <button type="submit">Envoyer la commande</button>
+
+            <p>
+                <label for="product_name">Nom du produit :</label><br>
+                <input type="text" name="product_name" id="product_name" required>
+            </p>
+
+            <p>
+                <label for="quantity">Quantité :</label><br>
+                <input type="number" name="quantity" id="quantity" required min="1">
+            </p>
+
+            <p>
+                <label for="delivery_method">Méthode de livraison :</label><br>
+                <select name="delivery_method" id="delivery_method" required>
+                    <option value="Retrait au magasin">Retrait au magasin</option>
+                    <option value="Livraison">Livraison</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="is_illegal">Illégal :</label>
+                <input type="checkbox" name="is_illegal" id="is_illegal">
+            </p>
+
+            <p>
+                <label for="description">Description complémentaire :</label><br>
+                <textarea name="description" id="description" rows="4"></textarea>
+            </p>
+
+            <button class="btn" type="submit">Valider la commande</button>
         </form>
+
         <p><a class="btn" href="{% url 'dashboard' %}">Retour au dashboard</a></p>
     </div>
 </body>
