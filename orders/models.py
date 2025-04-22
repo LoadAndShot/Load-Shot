@@ -13,6 +13,8 @@ class Order(models.Model):
     DELIVERY_CHOICES = (
         ('RETRAIT', 'Retrait magasin'),
         ('LIVRAISON', 'Livraison'),
+        description = models.TextField(blank=True, null=True),
+
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
