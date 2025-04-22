@@ -4,24 +4,21 @@
     <meta charset="UTF-8">
     <title>Load&Shot - Accueil</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-    <!-- 🟥 Logo Load&Shot -->
+    <!-- Logo uniquement sur l'accueil -->
     <div class="header">
         <a href="{% url 'home' %}">
             <img src="{% static 'images/logo.png' %}" alt="Load&Shot Logo">
         </a>
     </div>
 
-    <!-- 🟢 Contenu de l'accueil -->
-    <div class="container">
-        <h1>Load&Shot</h1>
-        <p>Spécialiste de la vente légale et illégale d'armes.<br>Livraison discrète. Qualité garantie.</p>
-        <div>
-            <a class="btn" href="{% url 'login' %}">Se connecter</a>
-            <a class="btn" href="{% url 'register' %}">Créer un compte</a>
-        </div>
-    </div>
+    <h1>Load&Shot</h1>
+    <p>Spécialiste de la vente légale et illégale d'armes.<br>Livraison discrète. Qualité garantie.</p>
+    
+    <a class="btn" href="{% url 'login' %}">Se connecter</a>
+    <a class="btn" href="{% url 'register' %}">Créer un compte</a>
 </body>
 </html>
+
