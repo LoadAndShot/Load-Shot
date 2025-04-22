@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon espace - Load&Shot</title>
+</head>
+<body>
+    <h1>Bienvenue {{ request.user.username }}</h1>
+    <p><a href="{% url 'logout' %}">Se déconnecter</a></p>
+
+    <h2>Mes commandes</h2>
+    {% if orders %}
+        <ul>
+            {% for order in orders %}
+                <li>{{ order.product.name }} x{{ order.quantity }} - {{ order.created_at }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Pas encore de commandes.</p>
+    {% endif %}
+</body>
+</html>
