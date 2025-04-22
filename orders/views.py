@@ -5,7 +5,12 @@ from django.contrib.auth.decorators import login_required
 from .models import Order
 from .forms import OrderForm
 
-# 🏠 Page d'accueil (fixé proprement)
+import discord
+import os
+from asgiref.sync import async_to_sync
+from discord import Intents
+
+# 🏠 Page d'accueil
 def home_view(request):
     return render(request, 'home.html')
 
@@ -44,23 +49,7 @@ def dashboard_view(request):
     orders = Order.objects.filter(user=request.user)
     return render(request, 'dashboard.html', {'orders': orders})
 
-# 📝 Créer une commande (sans catalogue pour l’instant)
-@login_required
-def create_order_view(request):
-    if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.user = request.user
-            order.description = request.POST.get('description')
-            order.save()
-            send_discord_order(order)
-            import discord
-import os
-
-from asgiref.sync import async_to_sync
-from discord import Intents
-
+# 🤖 Fonction pour envoyer la commande sur Discord
 def send_discord_order(order):
     TOKEN = os.getenv('DISCORD_BOT_TOKEN')
     LEGAL_CHANNEL_ID = int(os.getenv('DISCORD_LEGAL_CHANNEL_ID'))
@@ -82,6 +71,17 @@ def send_discord_order(order):
 
     async_to_sync(client.start)(TOKEN)
 
+# 📝 Créer une commande
+@login_required
+def create_order_view(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.user = request.user
+            order.description = request.POST.get('description')
+            order.save()
+            send_discord_order(order)  # 🟢 Envoie sur Discord ici
             return redirect('dashboard')
     else:
         form = OrderForm()
