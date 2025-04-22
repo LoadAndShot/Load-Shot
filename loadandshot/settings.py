@@ -2,15 +2,15 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# BASE_DIR configuration
+# 📂 Chemin de base du projet
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Sécurité
+# 🔐 Sécurité
 SECRET_KEY = os.getenv('SECRET_KEY', 'changeme-in-production')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
-ALLOWED_HOSTS = ['*']  # à restreindre si besoin
+ALLOWED_HOSTS = ['*']  # 🔥 À sécuriser si besoin
 
-# Applications installées
+# 🟢 Applications installées
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -18,13 +18,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'orders',  # ton app commandes
+    'orders',  # Ton app commandes
 ]
 
-# Middlewares
+# 🟢 Middlewares (Whitenoise OK)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ Whitenoise pour les fichiers statiques
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ Super important !
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -33,10 +33,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# URL configuration
+# 🟢 URLs & WSGI
 ROOT_URLCONF = 'loadandshot.urls'
+WSGI_APPLICATION = 'loadandshot.wsgi.application'
 
-# Templates
+# 🟢 Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -53,42 +54,32 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'loadandshot.wsgi.application'
-
-# ✅ Base de données PostgreSQL via DATABASE_URL
+# 🟢 Base de données PostgreSQL (Render)
 DATABASES = {
     'default': dj_database_url.config(
         default=os.getenv('DATABASE_URL')
     )
 }
 
-# Password validation
+# 🟢 Validation des mots de passe
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internationalisation
+# 🟢 Langue et fuseau horaire
 LANGUAGE_CODE = 'fr-fr'
 TIME_ZONE = 'Europe/Paris'
 USE_I18N = True
 USE_TZ = True
 
-# ✅ Static files (CSS, JS, images)
+# 🟥 📂 Gestion des fichiers statiques (CSS, images)
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # ✅ pour servir les statiques correctement en prod
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # ✅ Obligatoire pour Whitenoise
 
-# ✅ Default primary key field type
+# 🟢 Clé primaire par défaut
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
