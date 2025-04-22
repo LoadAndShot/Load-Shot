@@ -4,4 +4,4 @@ discord.py
 python-dotenv
 psycopg2-binary
 whitenoise
-
+dj-database-url
