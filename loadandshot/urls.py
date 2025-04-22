@@ -1,8 +1,7 @@
 from django.contrib import admin
-from django.urls import path, include  # ✅ N'oublie pas 'include' !
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('orders.urls')),  # ✅ On inclut les routes de l'app 'orders'
+    path('', include('orders.urls')),  # ← Bien inclure 'orders.urls'
 ]
-
