@@ -1,1 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1>Bienvenue {{ request.user.username }}</h1>
+    <h2>Présentation de Load&Shot</h2>
+    <p>Bienvenue chez Load&Shot, votre fournisseur RP de confiance. Faites défiler pour en savoir plus.</p>
+    <div class="presentation">
+        <p>Des produits de qualité livrés directement ou à retirer en magasin.</p>
+    </div>
+    <a href="#catalogues" class="btn">Accéder aux catalogues</a>
+
+    <div id="catalogues">
+        <h2>Catalogues disponibles :</h2>
+        {% for catalogue in catalogues %}
+            <p>{{ catalogue.name }}</p>
+            {% if catalogue.id == 1 and not request.user.lock_catalogue_1 %}
+                <a href="{% url 'create_order' catalogue.id %}" class="btn">Commander Catalogue 1</a>
+            {% elif catalogue.id == 2 and not request.user.lock_catalogue_2 %}
+                <a href="{% url 'create_order' catalogue.id %}" class="btn">Commander Catalogue 2</a>
+            {% else %}
+                <p class="locked">Catalogue verrouillé.</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
 
