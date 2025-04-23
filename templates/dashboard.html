@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-<div class="dashboard-container">
-    <h1>Commandes</h1>
+<div class="container">
+    <h1>Tableau de bord</h1>
+    <p>Bienvenue {{ request.user.username }} !</p>
     {% if request.user.can_access_catalogue1 %}
-        <a class="btn" href="{% url 'catalogue1' %}">Catalogue 1</a>
+        <a class="btn" href="{% url 'catalogue1' %}">Catalogue Légal</a>
     {% endif %}
     {% if request.user.can_access_catalogue2 %}
-        <a class="btn" href="{% url 'catalogue2' %}">Catalogue 2</a>
+        <a class="btn" href="{% url 'catalogue2' %}">Catalogue Spécial</a>
     {% endif %}
+    <a class="btn" href="{% url 'logout' %}">Se déconnecter</a>
 </div>
 {% endblock %}
+
 
 
