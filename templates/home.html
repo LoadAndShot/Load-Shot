@@ -2,9 +2,16 @@
 
 {% block content %}
 <div class="container">
-    <h1>Bienvenue sur Load&Shot !</h1>
-    <p>Connecté en tant que : {{ request.user.username }}</p>
-    <a href="/admin/">Accéder à l'administration</a>
+    <h1>Bienvenue sur Load&Shot, {{ request.user.username }} !</h1>
+
+    <div class="buttons">
+        <a class="btn" href="{% url 'catalogue' %}">Voir le Catalogue</a>
+
+        {% if is_admin %}
+            <a class="btn" href="/admin/">Accéder à l'administration</a>
+        {% endif %}
+
+        <a class="btn" href="{% url 'logout' %}">Se déconnecter</a>
+    </div>
 </div>
 {% endblock %}
-
