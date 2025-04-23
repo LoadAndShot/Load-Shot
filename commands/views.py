@@ -1,6 +1,9 @@
 # commands/views.py
 
 from django.shortcuts import render, redirect, get_object_or_404
+# commands/views.py
+
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Product, Order
@@ -22,17 +25,19 @@ def place_order(request, product_id):
 
     if request.method == 'POST':
         quantity = int(request.POST.get('quantity', 1))
+        delivery_method = request.POST.get('delivery_method')  # <- correction ici
         phone_number = request.POST.get('phone_number', '')
 
-        # Création de la commande (attention au champ 'user' et pas 'client')
+        # Création de la commande avec 'user', 'delivery_method', et 'phone_number'
         order = Order.objects.create(
             user=request.user,
             product=product,
             quantity=quantity,
+            delivery_method=delivery_method,  # <- correction ici
             phone_number=phone_number
         )
 
-        # Envoi de la notification Discord via Webhook
+        # Notification Discord
         if product.catalogue == 1:
             webhook_url = settings.DISCORD_LEGAL_WEBHOOK
             mention = "@TroTro"
@@ -41,7 +46,7 @@ def place_order(request, product_id):
             mention = "@AladindeAuCurry"
 
         data = {
-            "content": f"{mention} Nouvelle commande : {order.quantity} x {order.product.name} par {order.user.username} (Tel IG : {order.phone_number})"
+            "content": f"{mention} Nouvelle commande : {order.quantity} x {order.product.name} par {order.user.username} (Tel IG : {order.phone_number}) - Livraison : {order.delivery_method}"
         }
         try:
             requests.post(webhook_url, json=data)
