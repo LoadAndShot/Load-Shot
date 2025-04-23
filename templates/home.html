@@ -1,29 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="home-container">
-    <div class="welcome-box">
-        <h1>Bienvenue sur <span class="highlight">Load&Shot</span>, {{ request.user.username }} !</h1>
-        <p class="subtitle">Le meilleur de l'armurerie, à portée de clic.</p>
+<div class="container">
+    <img src="{% static 'images/logo.png' %}" alt="Load&Shot Logo" class="logo">
+    <h1>Bienvenue sur Load&Shot, {{ request.user.username }} !</h1>
+    
+    <div class="buttons">
+        {% if request.user.can_access_catalogue1 %}
+            <a class="btn" href="{% url 'catalogue1' %}">Catalogue 1</a>
+        {% else %}
+            <button class="btn disabled" disabled>Catalogue 1 (Verrouillé)</button>
+        {% endif %}
 
-        <div class="button-group">
-            {% if request.user.can_access_catalogue1 %}
-                <a class="btn" href="{% url 'catalogue1' %}">Catalogue Légal</a>
-            {% else %}
-                <a class="btn locked" href="#">Catalogue Légal (Verrouillé)</a>
-            {% endif %}
-
-            {% if request.user.can_access_catalogue2 %}
-                <a class="btn" href="{% url 'catalogue2' %}">Catalogue Privé</a>
-            {% else %}
-                <a class="btn locked" href="#">Catalogue Privé (Verrouillé)</a>
-            {% endif %}
-
-            {% if is_admin %}
-                <a class="btn admin-btn" href="/admin/">Accès Admin</a>
-            {% endif %}
-            <a class="btn logout-btn" href="{% url 'logout' %}">Se déconnecter</a>
-        </div>
+        {% if request.user.can_access_catalogue2 %}
+            <a class="btn" href="{% url 'catalogue2' %}">Catalogue 2</a>
+        {% else %}
+            <button class="btn disabled" disabled>Catalogue 2 (Verrouillé)</button>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
