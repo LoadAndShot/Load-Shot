@@ -8,8 +8,26 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <header>
-        <h1>Load&Shot</h1>
+    <header class="site-header">
+        <div class="logo">
+            {% if request.path == '/' %}
+                <img src="{% static 'images/logo.png' %}" alt="Load&Shot Logo">
+            {% endif %}
+        </div>
+        <nav>
+            <ul>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'home' %}">Accueil</a></li>
+                    <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+                    {% if request.user.is_superuser %}
+                        <li><a href="/admin/">Admin</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="{% url 'login' %}">Connexion</a></li>
+                    <li><a href="{% url 'register' %}">Inscription</a></li>
+                {% endif %}
+            </ul>
+        </nav>
     </header>
 
     <main>
@@ -17,8 +35,8 @@
         {% endblock %}
     </main>
 
-    <footer>
-        <p>&copy; 2025 Load&Shot - Tous droits réservés.</p>
+    <footer class="site-footer">
+        <p>Load&Shot RP &copy; 2025 - Tous droits réservés.</p>
     </footer>
 </body>
 </html>
