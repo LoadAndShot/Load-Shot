@@ -1,10 +1,10 @@
-# accounts/admin.py
-
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.urls import path
+from django.shortcuts import redirect
+from django.contrib import messages
 from .models import CustomUser
 from django.utils.translation import gettext_lazy as _
-from django.contrib import messages
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -32,14 +32,22 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
 
-    actions = ['unlock_catalogues_for_all', 'lock_catalogues_for_all']
+    change_list_template = "admin/accounts/customuser/change_list.html"  # Custom template
 
-    @admin.action(description="✅ Déverrouiller l'accès aux 2 catalogues pour tout le monde")
-    def unlock_catalogues_for_all(self, request, queryset):
-        updated = CustomUser.objects.update(can_access_catalogue1=True, can_access_catalogue2=True)
-        self.message_user(request, f"L'accès aux catalogues a été déverrouillé pour {updated} utilisateurs.", messages.SUCCESS)
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('unlock_catalogues/', self.admin_site.admin_view(self.unlock_catalogues), name='unlock_catalogues'),
+            path('lock_catalogues/', self.admin_site.admin_view(self.lock_catalogues), name='lock_catalogues'),
+        ]
+        return custom_urls + urls
 
-    @admin.action(description="🔒 Verrouiller l'accès aux 2 catalogues pour tout le monde")
-    def lock_catalogues_for_all(self, request, queryset):
-        updated = CustomUser.objects.update(can_access_catalogue1=False, can_access_catalogue2=False)
-        self.message_user(request, f"L'accès aux catalogues a été verrouillé pour {updated} utilisateurs.", messages.WARNING)
+    def unlock_catalogues(self, request):
+        CustomUser.objects.update(can_access_catalogue1=True, can_access_catalogue2=True)
+        self.message_user(request, "✅ Tous les catalogues ont été déverrouillés pour tous les utilisateurs.", messages.SUCCESS)
+        return redirect('..')
+
+    def lock_catalogues(self, request):
+        CustomUser.objects.update(can_access_catalogue1=False, can_access_catalogue2=False)
+        self.message_user(request, "🔒 Tous les catalogues ont été verrouillés pour tous les utilisateurs.", messages.WARNING)
+        return redirect('..')
