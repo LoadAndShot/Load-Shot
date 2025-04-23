@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="home-container">
-    <img src="{% static 'images/logo.png' %}" alt="Load&Shot Logo" class="logo">
+    <div style="width: 150px; height: 150px; background-color: red; border-radius: 10px;"></div>
     <h1>Bienvenue sur Load&Shot, {{ request.user.username }} !</h1>
     
     {% if request.user.can_access_catalogue1 or request.user.can_access_catalogue2 %}
