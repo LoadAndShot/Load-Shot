@@ -8,22 +8,15 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <header class="header">
+    <div class="navbar">
         {% if request.user.is_authenticated %}
-            <div class="user-info">
-                Connecté en tant que : {{ request.user.username }}
-                <a class="btn logout" href="{% url 'logout' %}">Déconnexion</a>
-            </div>
+            <span>Connecté en tant que : {{ request.user.username }}</span>
+            <a href="{% url 'logout' %}">Déconnexion</a>
         {% endif %}
-    </header>
-
-    <main class="content">
+    </div>
+    <div class="content">
         {% block content %}
         {% endblock %}
-    </main>
-
-    <footer class="footer">
-        <p>Load&Shot © 2025 - Serveur RP</p>
-    </footer>
+    </div>
 </body>
 </html>
