@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,17 +7,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <header>
-        <h1>Load&Shot</h1>
-        {% if request.user.is_authenticated %}
-            <p>Bienvenue, {{ request.user.username }} | <a href="{% url 'logout' %}">Déconnexion</a></p>
-        {% else %}
-            <a href="{% url 'login' %}">Connexion</a> | <a href="{% url 'register' %}">Inscription</a>
-        {% endif %}
-    </header>
-
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+    {% block content %}{% endblock %}
 </body>
 </html>
