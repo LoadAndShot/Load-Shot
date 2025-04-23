@@ -1,43 +1,29 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
-<div class="container">
-    <h1>Bienvenue sur Load&Shot, {{ request.user.username }} !</h1>
+<div class="home-container">
+    <div class="welcome-box">
+        <h1>Bienvenue sur <span class="highlight">Load&Shot</span>, {{ request.user.username }} !</h1>
+        <p class="subtitle">Le meilleur de l'armurerie, à portée de clic.</p>
 
-    <div class="catalogue-section">
-        <h2>Passer une commande :</h2>
+        <div class="button-group">
+            {% if request.user.can_access_catalogue1 %}
+                <a class="btn" href="{% url 'catalogue1' %}">Catalogue Légal</a>
+            {% else %}
+                <a class="btn locked" href="#">Catalogue Légal (Verrouillé)</a>
+            {% endif %}
 
-        {% if catalogue1_unlocked %}
-            <a class="btn" href="{% url 'catalogue1' %}">Catalogue 1 (Légal)</a>
-        {% else %}
-            <button class="btn locked" disabled>Catalogue 1 (Verrouillé)</button>
-        {% endif %}
+            {% if request.user.can_access_catalogue2 %}
+                <a class="btn" href="{% url 'catalogue2' %}">Catalogue Privé</a>
+            {% else %}
+                <a class="btn locked" href="#">Catalogue Privé (Verrouillé)</a>
+            {% endif %}
 
-        {% if catalogue2_unlocked %}
-            <a class="btn" href="{% url 'catalogue2' %}">Catalogue 2</a>
-        {% else %}
-            <button class="btn locked" disabled>Catalogue 2 (Verrouillé)</button>
-        {% endif %}
-    </div>
-
-    {% if is_admin %}
-        <div class="admin-section">
-            <a class="btn admin" href="/admin/">Accéder à l'administration</a>
+            {% if is_admin %}
+                <a class="btn admin-btn" href="/admin/">Accès Admin</a>
+            {% endif %}
+            <a class="btn logout-btn" href="{% url 'logout' %}">Se déconnecter</a>
         </div>
-    {% endif %}
-
-    <div class="logout-section">
-        <a class="btn logout" href="{% url 'logout' %}">Se déconnecter</a>
     </div>
 </div>
-
-<style>
-    .container { text-align: center; margin-top: 50px; }
-    .btn { margin: 10px; padding: 10px 20px; border-radius: 8px; text-decoration: none; display: inline-block; }
-    .locked { background-color: #555; color: #aaa; cursor: not-allowed; }
-    .admin { background-color: darkred; color: white; }
-    .logout { background-color: #333; color: white; }
-    .btn:hover:not(.locked) { box-shadow: 0 0 8px red; }
-</style>
 {% endblock %}
