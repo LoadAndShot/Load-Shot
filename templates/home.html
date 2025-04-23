@@ -1,22 +1,15 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div class="container">
+<div class="home-container">
     <img src="{% static 'images/logo.png' %}" alt="Load&Shot Logo" class="logo">
     <h1>Bienvenue sur Load&Shot, {{ request.user.username }} !</h1>
-    
-    <div class="buttons">
-        {% if request.user.can_access_catalogue1 %}
-            <a class="btn" href="{% url 'catalogue1' %}">Catalogue 1</a>
-        {% else %}
-            <button class="btn disabled" disabled>Catalogue 1 (Verrouillé)</button>
-        {% endif %}
-
-        {% if request.user.can_access_catalogue2 %}
-            <a class="btn" href="{% url 'catalogue2' %}">Catalogue 2</a>
-        {% else %}
-            <button class="btn disabled" disabled>Catalogue 2 (Verrouillé)</button>
-        {% endif %}
-    </div>
+    {% if request.user.can_access_catalogue1 or request.user.can_access_catalogue2 %}
+        <a class="btn" href="{% url 'dashboard' %}">Passer une commande</a>
+    {% else %}
+        <p>Accès au catalogue verrouillé. Contactez un admin.</p>
+    {% endif %}
+    {% if request.user.is_staff %}
+        <a class="btn" href="/admin/">Accéder à l'administration</a>
+    {% endif %}
 </div>
 {% endblock %}
