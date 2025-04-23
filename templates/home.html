@@ -1,1 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Bienvenue sur Load&Shot !</h1>
+    <p>Connecté en tant que : {{ request.user.username }}</p>
+    <a href="/admin/">Accéder à l'administration</a>
+</div>
+{% endblock %}
 
