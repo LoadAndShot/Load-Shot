@@ -1,9 +1,6 @@
 # commands/views.py
 
 from django.shortcuts import render, redirect, get_object_or_404
-# commands/views.py
-
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Product, Order
@@ -12,12 +9,17 @@ import requests
 
 @login_required
 def dashboard(request):
-    catalogue1 = Product.objects.filter(catalogue=1)
-    catalogue2 = Product.objects.filter(catalogue=2)
-    return render(request, 'dashboard.html', {
-        'catalogue1': catalogue1,
-        'catalogue2': catalogue2,
-    })
+    return render(request, 'dashboard.html')
+
+@login_required
+def catalogue1(request):
+    products = Product.objects.filter(catalogue=1)
+    return render(request, 'catalogue1.html', {'products': products})
+
+@login_required
+def catalogue2(request):
+    products = Product.objects.filter(catalogue=2)
+    return render(request, 'catalogue2.html', {'products': products})
 
 @login_required
 def place_order(request, product_id):
@@ -25,19 +27,18 @@ def place_order(request, product_id):
 
     if request.method == 'POST':
         quantity = int(request.POST.get('quantity', 1))
-        delivery_method = request.POST.get('delivery_method')  # <- correction ici
+        delivery_method = request.POST.get('delivery_method')
         phone_number = request.POST.get('phone_number', '')
 
-        # Création de la commande avec 'user', 'delivery_method', et 'phone_number'
         order = Order.objects.create(
             user=request.user,
             product=product,
             quantity=quantity,
-            delivery_method=delivery_method,  # <- correction ici
+            delivery_method=delivery_method,
             phone_number=phone_number
         )
 
-        # Notification Discord
+        # Envoi de la notif Discord
         if product.catalogue == 1:
             webhook_url = settings.DISCORD_LEGAL_WEBHOOK
             mention = "@TroTro"
