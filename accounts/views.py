@@ -3,13 +3,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
-from django.http import HttpResponse  # à ajouter tout en haut de ton views.py
 
+@login_required
 def home(request):
-    return HttpResponse("Hello, ça marche !")
+    is_admin = request.user.is_staff or request.user.is_superuser
+    return render(request, 'home.html', {'is_admin': is_admin})
 
-
-# Vue pour l'inscription
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -21,7 +20,6 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
 
-# Vue pour la connexion
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -34,7 +32,6 @@ def login_view(request):
             messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
     return render(request, 'login.html')
 
-# Vue pour la déconnexion
 def logout_view(request):
     logout(request)
     return redirect('login')
