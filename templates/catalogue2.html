@@ -3,27 +3,17 @@
 
 {% block content %}
 <div class="container">
-    <h1>Catalogue 2 - Produits disponibles</h1>
-
-    {% if products %}
-        <div class="product-grid">
-            {% for product in products %}
-                <div class="product-card">
-                    <h2>{{ product.name }}</h2>
-                    <p>{{ product.description }}</p>
-                    <p>Prix : {{ product.price }}€</p>
-                    <a class="btn" href="{% url 'place_order' product.id %}">Commander</a>
-                </div>
-            {% endfor %}
+    <h1>Catalogue Spécial</h1>
+    {% for product in products %}
+        <div>
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <a class="btn" href="{% url 'place_order' product.id %}">Commander</a>
         </div>
-    {% else %}
-        <p>Aucun produit disponible dans ce catalogue.</p>
-    {% endif %}
-
-    <div class="buttons">
-        <a class="btn" href="{% url 'home' %}">Retour à l'accueil</a>
-        <a class="btn" href="{% url 'logout' %}">Se déconnecter</a>
-    </div>
+    {% empty %}
+        <p>Aucun produit disponible.</p>
+    {% endfor %}
+    <a class="btn" href="{% url 'dashboard' %}">Retour</a>
 </div>
 {% endblock %}
 
