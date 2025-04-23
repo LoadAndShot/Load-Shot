@@ -5,9 +5,9 @@ from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 
 # Vue Home (page d'accueil après connexion)
-@login_required
 def home(request):
     return render(request, 'home.html')
+
 
 # Vue pour l'inscription
 def register(request):
