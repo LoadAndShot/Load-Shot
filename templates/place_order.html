@@ -3,28 +3,20 @@
 
 {% block content %}
 <div class="container">
-    <h1>Commander : {{ product.name }}</h1>
-    <p>Description : {{ product.description }}</p>
-    <p>Prix : {{ product.price }}€</p>
-
+    <h1>Passer commande : {{ product.name }}</h1>
     <form method="POST">
         {% csrf_token %}
-        <label for="quantity">Quantité :</label>
-        <input type="number" name="quantity" id="quantity" value="1" min="1" required>
-
-        <label for="delivery_method">Méthode de livraison :</label>
-        <select name="delivery_method" id="delivery_method" required>
-            <option value="retrait">Retrait</option>
-            <option value="livraison">Livraison</option>
-        </select>
-
-        <button type="submit" class="btn">Passer la commande</button>
+        <label>Quantité :</label><br>
+        <input type="number" name="quantity" min="1" required><br>
+        <label>Méthode de livraison :</label><br>
+        <select name="delivery_method" required>
+            <option value="Retrait">Retrait</option>
+            <option value="Livraison">Livraison</option>
+        </select><br><br>
+        <button class="btn" type="submit">Valider la commande</button>
     </form>
-
-    <div class="buttons">
-        <a class="btn" href="{% url 'dashboard' %}">Retour au tableau de bord</a>
-        <a class="btn" href="{% url 'logout' %}">Se déconnecter</a>
-    </div>
+    <a class="btn" href="{% url 'dashboard' %}">Annuler</a>
 </div>
 {% endblock %}
+
 
