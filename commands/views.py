@@ -27,13 +27,14 @@ def place_order(request, product_id):
         delivery_method = request.POST.get('delivery_method')
         phone_number = request.POST.get('phone_number')  # 🔥 récupération du numéro
 
-        order = Order.objects.create(
-            client=request.user,
-            product=product,
-            quantity=quantity,
-            delivery_method=delivery_method,
-            phone_number=phone_number  # 🔥 stockage du numéro
-        )
+        Order.objects.create(
+    user=request.user,  # ← correction ici
+    product=product,
+    quantity=quantity,
+    delivery_method=delivery_method,
+    phone_number=phone_number
+)
+
 
         # Notification Discord (code que je t'avais déjà donné)
         send_discord_notification(order)
