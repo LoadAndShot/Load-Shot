@@ -16,6 +16,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'orders',  # Ton app
+    'accounts',
+    'commands',
+    'core',
 ]
 
 MIDDLEWARE = [
