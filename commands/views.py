@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Product, Order
-from bot.discord_notifications import send_discord_notification
 from django.conf import settings
+from .models import Product, Order
 import requests
-import os
 
 @login_required
 def dashboard(request):
@@ -24,36 +22,49 @@ def catalogue2(request):
 @login_required
 def place_order(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+
     if request.method == 'POST':
         delivery_method = request.POST.get('delivery_method')
         quantity = int(request.POST.get('quantity'))
+
         order = Order.objects.create(
             client=request.user,
             product=product,
             quantity=quantity,
             delivery_method=delivery_method
         )
-        messages.success(request, 'Commande passée avec succès !')
-        
-        # Envoi de la notification Discord
+
+        # Envoie la notification Discord
         send_discord_notification(order)
 
+        messages.success(request, 'Commande passée avec succès !')
         return redirect('dashboard')
+
     return render(request, 'place_order.html', {'product': product})
 
 def send_discord_notification(order):
-    catalogue = order.product.catalogue
-    webhook_url = None
-    mention = None
-
-    if catalogue == 1:
-        webhook_url = os.getenv('DISCORD_LEGAL_WEBHOOK')
+    if order.product.catalogue == 1:
+        webhook_url = settings.DISCORD_LEGAL_WEBHOOK
         mention = "@TroTro"
-    elif catalogue == 2:
-        webhook_url = os.getenv('DISCORD_ILLEGAL_WEBHOOK')
+        catalogue_name = "Catalogue Légal"
+    elif order.product.catalogue == 2:
+        webhook_url = settings.DISCORD_ILLEGAL_WEBHOOK
         mention = "@AladindeAuCurry"
+        catalogue_name = "Catalogue Illégal"
+    else:
+        return  # Pas de webhook si le catalogue est incorrect
 
-    if webhook_url:
-        message = f"Nouvelle commande de **{order.client.username}** : {order.quantity}x {order.product.name} par {order.delivery_method}. {mention}"
-        payload = {"content": message}
-        requests.post(webhook_url, json=payload)
+    data = {
+        "content": f"📦 Nouvelle commande passée par **{order.client.username}** sur **{catalogue_name}**.\n"
+                   f"Produit : {order.product.name}\n"
+                   f"Quantité : {order.quantity}\n"
+                   f"Méthode de livraison : {order.delivery_method}\n"
+                   f"Notification : {mention}"
+    }
+
+    try:
+        response = requests.post(webhook_url, json=data)
+        if response.status_code != 204:
+            print(f"Erreur lors de l'envoi du message Discord : {response.status_code} - {response.text}")
+    except Exception as e:
+        print(f"Erreur Discord Webhook : {e}")
