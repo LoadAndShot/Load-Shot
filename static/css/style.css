@@ -71,4 +71,25 @@ a {
 a:hover {
     text-decoration: underline;
 }
+/* Header */
+.site-header {
+    background-color: #1c1c1c;
+    padding: 10px 0;
+    border-bottom: 2px solid #ff4b5c;
+}
+
+.site-title {
+    color: #ff4b5c;
+    font-size: 28px;
+    margin: 0;
+}
+
+.nav-links {
+    text-align: right;
+}
+
+.nav-links .btn {
+    margin-right: 20px;
+    margin-top: 5px;
+}
 
