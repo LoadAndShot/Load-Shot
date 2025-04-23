@@ -3,10 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
+from django.http import HttpResponse  # à ajouter tout en haut de ton views.py
 
-# Vue Home (page d'accueil après connexion)
 def home(request):
-    return render(request, 'home.html')
+    return HttpResponse("Hello, ça marche !")
 
 
 # Vue pour l'inscription
