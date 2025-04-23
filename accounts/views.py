@@ -4,6 +4,9 @@ from commands.models import Product, Order
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm
+def home(request):
+    return render(request, 'home.html')  # ← Ça te manquait !
+
 
 @login_required
 def dashboard(request):
