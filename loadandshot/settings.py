@@ -18,7 +18,6 @@ INSTALLED_APPS = [
     'orders',  # Ton app
     'accounts',
     'commands',
-    'core',
 ]
 
 MIDDLEWARE = [
