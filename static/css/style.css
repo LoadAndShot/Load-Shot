@@ -1,80 +1,74 @@
-/* style.css */
-
+/* Style global sombre et classe */
 body {
-    background-color: #1a1a1a;
+    background-color: #121212;
     color: #e0e0e0;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-.container {
+/* Container centré */
+.container, .home-container {
     max-width: 800px;
     margin: 50px auto;
+    padding: 20px;
     text-align: center;
 }
 
-h1, h2, h3 {
-    color: #ff3333;
+/* Logo */
+.logo {
+    width: 150px;
+    margin-bottom: 20px;
 }
 
-a {
+/* Titres */
+h1, h2, h3 {
+    color: #ff4b5c;
+    margin-bottom: 20px;
+}
+
+/* Paragraphes */
+p {
+    font-size: 18px;
+}
+
+/* Boutons stylisés */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    margin: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ff4b5c;
+    border: none;
+    border-radius: 30px;
     text-decoration: none;
-    color: #ff3333;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 10px rgba(255, 75, 92, 0.5);
+}
+
+.btn:hover {
+    background-color: #ff6b7c;
+    box-shadow: 0 0 20px rgba(255, 75, 92, 0.9);
+    transform: scale(1.05);
+}
+
+/* Administration / messages */
+.messages {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #333;
+    color: #ff4b5c;
+}
+
+/* Liens */
+a {
+    color: #ff4b5c;
+    text-decoration: none;
 }
 
 a:hover {
     text-decoration: underline;
 }
 
-.buttons {
-    margin-top: 30px;
-}
-
-.btn {
-    background-color: #2a2a2a;
-    border: 2px solid #ff3333;
-    color: #e0e0e0;
-    padding: 12px 25px;
-    border-radius: 30px;
-    margin: 10px;
-    display: inline-block;
-    transition: all 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #ff3333;
-    color: #1a1a1a;
-    box-shadow: 0 0 10px #ff3333, 0 0 20px #ff3333;
-}
-
-input, select {
-    background-color: #2a2a2a;
-    color: #e0e0e0;
-    border: 1px solid #ff3333;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 5px 0;
-}
-
-input[type="submit"] {
-    cursor: pointer;
-}
-
-input[type="submit"]:hover {
-    background-color: #ff3333;
-    color: #1a1a1a;
-    box-shadow: 0 0 10px #ff3333, 0 0 20px #ff3333;
-}
-
-.message {
-    margin-top: 20px;
-    color: #ff3333;
-    font-weight: bold;
-}
-
-.admin-link {
-    margin-top: 20px;
-    color: #ff3333;
-    display: block;
-}
