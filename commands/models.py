@@ -13,16 +13,16 @@ class Product(models.Model):
         return self.name
 
 class Order(models.Model):
-    DELIVERY_METHOD_CHOICES = [
-        ('pickup', 'Retrait sur place'),
-        ('delivery', 'Livraison'),
+    DELIVERY_CHOICES = [
+        ('livraison', 'Livraison'),
+        ('retrait', 'Retrait'),
     ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     phone_number = models.CharField(max_length=100)
-    delivery_method = models.CharField(max_length=20, choices=DELIVERY_METHOD_CHOICES)
+    delivery_method = models.CharField(max_length=20, choices=DELIVERY_CHOICES, default='livraison')
     is_delivered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
