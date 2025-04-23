@@ -8,17 +8,17 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="navbar">
-        {% if request.user.is_authenticated %}
-            <span>Connecté en tant que : {{ request.user.username }}</span>
-            <a href="{% url 'logout' %}" class="btn">Se déconnecter</a>
-        {% else %}
-            <a href="{% url 'login' %}" class="btn">Connexion</a>
-            <a href="{% url 'register' %}" class="btn">Inscription</a>
-        {% endif %}
-    </div>
-    <div class="content">
-        {% block content %}{% endblock %}
-    </div>
+    <header>
+        <h1>Load&Shot</h1>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Load&Shot - Tous droits réservés.</p>
+    </footer>
 </body>
 </html>
