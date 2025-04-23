@@ -1,19 +1,24 @@
 {% extends 'base.html' %}
-{% load static %}  <!-- OBLIGATOIRE ici car tu utilises static -->
+{% load static %}
 
 {% block content %}
 <div class="home-container">
-    <div style="width: 150px; height: 150px; background-color: red; border-radius: 10px;"></div>
+    <img src="{% static 'images/logo.png' %}" alt="Load&Shot Logo" class="logo">
     <h1>Bienvenue sur Load&Shot, {{ request.user.username }} !</h1>
-    
+
     {% if request.user.can_access_catalogue1 or request.user.can_access_catalogue2 %}
-        <a class="btn" href="{% url 'dashboard' %}">Passer une commande</a>
+        <div class="buttons">
+            <a class="btn" href="{% url 'dashboard' %}">Passer une commande</a>
+        </div>
     {% else %}
         <p>Accès au catalogue verrouillé. Contactez un admin.</p>
     {% endif %}
 
-    {% if request.user.is_staff %}
-        <a class="btn" href="/admin/">Accéder à l'administration</a>
-    {% endif %}
+    <div class="buttons">
+        {% if request.user.is_staff %}
+            <a class="btn" href="/admin/">Accéder à l'administration</a>
+        {% endif %}
+        <a class="btn" href="{% url 'logout' %}">Se déconnecter</a>
+    </div>
 </div>
 {% endblock %}
