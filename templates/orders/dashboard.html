@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Mes commandes</h2>
+<p><a href="{% url 'new_order' %}" class="btn btn-secondary">+ Nouvelle commande</a></p>
+{% if orders %}
+<table class="orders-table">
+    <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Méthode</th>
+        <th>Date</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.get_product_type_display }}</td>
+        <td>{{ order.get_method_display }}</td>
+        <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Aucune commande pour le moment.</p>
+{% endif %}
+{% endblock content %}
