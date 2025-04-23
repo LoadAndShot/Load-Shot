@@ -1,12 +1,12 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
+from .models import Product, Order
 
-class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'is_staff', 'is_locked_catalogue1', 'is_locked_catalogue2')
-    fieldsets = UserAdmin.fieldsets + (
-        ('Catalogue Locks', {'fields': ('is_locked_catalogue1', 'is_locked_catalogue2')}),
-    )
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'catalogue')
+    list_filter = ('catalogue',)
 
-admin.site.register(CustomUser, CustomUserAdmin)
-
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('client', 'product', 'quantity', 'delivery_method', 'created_at')
+    list_filter = ('delivery_method', 'created_at')
