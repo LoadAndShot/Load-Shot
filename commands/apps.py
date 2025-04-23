@@ -1,4 +1,3 @@
-# commands/apps.py
 from django.apps import AppConfig
 
 class CommandsConfig(AppConfig):
