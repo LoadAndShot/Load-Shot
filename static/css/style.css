@@ -7,7 +7,22 @@ body {
     padding: 0;
 }
 
-/* Centrage global */
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #1e1e1e;
+    border-bottom: 1px solid #ff4b5c;
+}
+
+.welcome-msg {
+    margin-right: 20px;
+    color: #e0e0e0;
+}
+
+/* Container centré */
 .container, .home-container {
     max-width: 800px;
     margin: 50px auto;
@@ -32,18 +47,11 @@ p {
     font-size: 18px;
 }
 
-/* Boutons stylisés et centrés */
-.buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 20px;
-}
-
+/* Boutons stylisés */
 .btn {
     display: inline-block;
     padding: 12px 24px;
+    margin: 10px;
     font-size: 16px;
     color: #fff;
     background-color: #ff4b5c;
@@ -60,7 +68,11 @@ p {
     transform: scale(1.05);
 }
 
-/* Messages */
+.logout-btn {
+    margin-left: 10px;
+}
+
+/* Administration / messages */
 .messages {
     margin: 20px 0;
     padding: 10px;
@@ -78,4 +90,3 @@ a {
 a:hover {
     text-decoration: underline;
 }
-
