@@ -16,11 +16,11 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
-    phone_number = models.CharField(max_length=100)  # Ton ajout précédent
-    is_delivered = models.BooleanField(default=False)  # ✅ ajoute cette ligne
-
+    phone_number = models.CharField(max_length=100)
+    is_delivered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Commande de {self.user.username} - {self.product.name}"
+
 
