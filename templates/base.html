@@ -8,7 +8,22 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    {% block content %}
-    {% endblock %}
+    <header class="header">
+        {% if request.user.is_authenticated %}
+            <div class="user-info">
+                Connecté en tant que : {{ request.user.username }}
+                <a class="btn logout" href="{% url 'logout' %}">Déconnexion</a>
+            </div>
+        {% endif %}
+    </header>
+
+    <main class="content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>Load&Shot © 2025 - Serveur RP</p>
+    </footer>
 </body>
 </html>
