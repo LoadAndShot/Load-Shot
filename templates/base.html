@@ -11,12 +11,14 @@
     <div class="navbar">
         {% if request.user.is_authenticated %}
             <span>Connecté en tant que : {{ request.user.username }}</span>
-            <a href="{% url 'logout' %}">Déconnexion</a>
+            <a href="{% url 'logout' %}" class="btn">Se déconnecter</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn">Connexion</a>
+            <a href="{% url 'register' %}" class="btn">Inscription</a>
         {% endif %}
     </div>
     <div class="content">
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </div>
 </body>
 </html>
