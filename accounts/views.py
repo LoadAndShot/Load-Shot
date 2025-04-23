@@ -3,11 +3,19 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
 
 @login_required
 def home(request):
-    is_admin = request.user.is_staff or request.user.is_superuser
-    return render(request, 'home.html', {'is_admin': is_admin})
+    user = request.user
+    context = {
+        'is_admin': user.is_staff,
+        'catalogue1_unlocked': user.can_access_catalogue1,
+        'catalogue2_unlocked': user.can_access_catalogue2,
+    }
+    return render(request, 'home.html', context)
 
 def register(request):
     if request.method == 'POST':
