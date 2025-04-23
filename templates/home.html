@@ -1,15 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
 <div class="home-container">
     <img src="{% static 'images/logo.png' %}" alt="Load&Shot Logo" class="logo">
     <h1>Bienvenue sur Load&Shot, {{ request.user.username }} !</h1>
-    {% if request.user.can_access_catalogue1 or request.user.can_access_catalogue2 %}
-        <a class="btn" href="{% url 'dashboard' %}">Passer une commande</a>
-    {% else %}
-        <p>Accès au catalogue verrouillé. Contactez un admin.</p>
-    {% endif %}
-    {% if request.user.is_staff %}
-        <a class="btn" href="/admin/">Accéder à l'administration</a>
-    {% endif %}
+
+    <div class="buttons">
+        {% if request.user.can_access_catalogue1 or request.user.can_access_catalogue2 %}
+            <a class="btn" href="{% url 'dashboard' %}">Passer une commande</a>
+        {% else %}
+            <p class="locked-message">Accès au catalogue verrouillé. Contactez un administrateur.</p>
+        {% endif %}
+
+        {% if request.user.is_staff %}
+            <a class="btn" href="/admin/">Accéder à l'administration</a>
+        {% endif %}
+        <a class="btn logout-btn" href="{% url 'logout' %}">Se déconnecter</a>
+    </div>
 </div>
 {% endblock %}
+
