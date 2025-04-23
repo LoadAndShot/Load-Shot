@@ -33,7 +33,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'loadandshot.urls'
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'DIRS': [BASE_DIR / 'templates'],
+    'DIRS': [BASE_DIR / 'templates'],  # <- bien ce chemin là ?
     'APP_DIRS': True,
     'OPTIONS': {
         'context_processors': [
