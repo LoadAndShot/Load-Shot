@@ -29,7 +29,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-AUTH_USER_MODEL = 'accounts.CustomUser'
 
 ROOT_URLCONF = 'loadandshot.urls'
 TEMPLATES = [{
@@ -69,5 +68,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# ... tout le reste de ton fichier settings.py ...
+
+# Spécifie que tu utilises ton CustomUser
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
 
 
