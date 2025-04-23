@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-<div class="form-container">
-    <h2>Inscription</h2>
-    <form method="post">
+<div class="container">
+    <h1>Inscription</h1>
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn">S'inscrire</button>
+        <button class="btn" type="submit">S'inscrire</button>
     </form>
-    <p>Déjà inscrit ? <a href="{% url 'login' %}">Connecte-toi ici</a>.</p>
+    <p>Déjà un compte ? <a href="{% url 'login' %}">Connexion</a></p>
 </div>
 {% endblock %}
