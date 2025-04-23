@@ -1,12 +1,12 @@
 from django.urls import path
 from . import views
 
+# Routes URL de l'application 'orders'
 urlpatterns = [
-    path('', views.home_view, name='home'),
-    path('register/', views.register_view, name='register'),
-    path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
-    path('dashboard/', views.dashboard_view, name='dashboard'),
-    path('order/', views.create_order_view, name='create_order'),
-    path('test/', views.test_view, name='test'),
+    path('', views.home, name='home'),                # Page d'accueil
+    path('signup/', views.signup, name='signup'),     # Inscription
+    path('login/', views.login_view, name='login'),   # Connexion
+    path('logout/', views.logout_view, name='logout'),# Déconnexion
+    path('dashboard/', views.dashboard, name='dashboard'),    # Tableau de bord utilisateur
+    path('orders/new/', views.new_order, name='new_order'),   # Création d'une nouvelle commande
 ]
