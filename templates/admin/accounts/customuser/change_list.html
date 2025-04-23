@@ -1,0 +1,9 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools %}
+    <div>
+        <a class="button" href="unlock_catalogues/">✅ Déverrouiller tous les catalogues</a>
+        <a class="button" href="lock_catalogues/">🔒 Verrouiller tous les catalogues</a>
+    </div>
+    {{ block.super }}
+{% endblock %}
