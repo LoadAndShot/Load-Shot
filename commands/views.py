@@ -22,25 +22,26 @@ def catalogue2(request):
 @login_required
 def place_order(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-
     if request.method == 'POST':
-        delivery_method = request.POST.get('delivery_method')
         quantity = int(request.POST.get('quantity'))
+        delivery_method = request.POST.get('delivery_method')
+        phone_number = request.POST.get('phone_number')  # 🔥 récupération du numéro
 
         order = Order.objects.create(
             client=request.user,
             product=product,
             quantity=quantity,
-            delivery_method=delivery_method
+            delivery_method=delivery_method,
+            phone_number=phone_number  # 🔥 stockage du numéro
         )
 
-        # Envoie la notification Discord
+        # Notification Discord (code que je t'avais déjà donné)
         send_discord_notification(order)
 
         messages.success(request, 'Commande passée avec succès !')
         return redirect('dashboard')
-
     return render(request, 'place_order.html', {'product': product})
+
 
 def send_discord_notification(order):
     if order.product.catalogue == 1:
