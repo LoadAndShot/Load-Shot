@@ -76,6 +76,9 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # Redirection par défaut vers la page de login si pas connecté
 LOGIN_URL = 'login'
 DEBUG = True
+# Webhooks Discord pour notifications
+DISCORD_LEGAL_WEBHOOK = os.getenv('DISCORD_LEGAL_WEBHOOK')
+DISCORD_ILLEGAL_WEBHOOK = os.getenv('DISCORD_ILLEGAL_WEBHOOK')
 
 
 
