@@ -1,1 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>Catalogue 1 - Produits disponibles</h1>
+
+    {% if products %}
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.description }}</p>
+                    <p>Prix : {{ product.price }}€</p>
+                    <a class="btn" href="{% url 'place_order' product.id %}">Commander</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Aucun produit disponible dans ce catalogue.</p>
+    {% endif %}
+
+    <div class="buttons">
+        <a class="btn" href="{% url 'home' %}">Retour à l'accueil</a>
+        <a class="btn" href="{% url 'logout' %}">Se déconnecter</a>
+    </div>
+</div>
+{% endblock %}
 
