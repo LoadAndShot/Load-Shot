@@ -1,22 +1,29 @@
-{% extends 'base.html' %}
-{% load static %}
-
+{{% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h1>Passer commande : {{ product.name }}</h1>
-    <form method="POST">
+    <h1>Passer une commande pour : {{ product.name }}</h1>
+
+    <form method="post">
         {% csrf_token %}
-        <label>Quantité :</label><br>
-        <input type="number" name="quantity" min="1" required><br>
-        <label>Méthode de livraison :</label><br>
-        <select name="delivery_method" required>
-            <option value="Retrait">Retrait</option>
-            <option value="Livraison">Livraison</option>
-        </select><br><br>
-        <button class="btn" type="submit">Valider la commande</button>
+        <p><strong>Produit :</strong> {{ product.name }}</p>
+        <p><strong>Description :</strong> {{ product.description }}</p>
+        <p><strong>Prix :</strong> {{ product.price }} €</p>
+
+        <label for="quantity">Quantité :</label>
+        <input type="number" name="quantity" id="quantity" min="1" value="1" required>
+
+        <label for="delivery_method">Méthode de livraison :</label>
+        <select name="delivery_method" id="delivery_method" required>
+            <option value="livraison">Livraison</option>
+            <option value="retrait">Retrait</option>
+        </select>
+
+        <label for="phone_number">Numéro de téléphone IG :</label>
+        <input type="text" name="phone_number" id="phone_number" placeholder="Exemple : 555-1234" required>
+
+        <button type="submit" class="btn">Passer la commande</button>
     </form>
-    <a class="btn" href="{% url 'dashboard' %}">Annuler</a>
+
+    <a class="btn" href="{% url 'dashboard' %}">Retour au tableau de bord</a>
 </div>
 {% endblock %}
-
-
