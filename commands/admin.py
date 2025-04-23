@@ -5,8 +5,11 @@ from .models import Product, Order
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'catalogue')
     list_filter = ('catalogue',)
+    search_fields = ('name',)
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('client', 'product', 'quantity', 'delivery_method', 'created_at', 'is_locked')
-    list_filter = ('delivery_method', 'is_locked')
+    list_display = ('user', 'product', 'quantity', 'delivery_method', 'status', 'created_at')
+    list_filter = ('delivery_method', 'status')
+    search_fields = ('user__username', 'product__name')
+
