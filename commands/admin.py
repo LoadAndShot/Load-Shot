@@ -9,7 +9,6 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('client', 'product', 'quantity', 'delivery_method', 'created_at')
-    list_filter = ('delivery_method', 'created_at')
+    list_display = ('client', 'product', 'quantity', 'delivery_method', 'created_at', 'is_delivered')
+    list_filter = ('delivery_method', 'is_delivered')
     search_fields = ('client__username', 'product__name')
-
