@@ -74,6 +74,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 # Redirection par défaut vers la page de login si pas connecté
 LOGIN_URL = 'login'
+DEBUG = True
 
 
 
