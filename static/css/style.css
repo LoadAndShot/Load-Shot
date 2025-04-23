@@ -7,7 +7,7 @@ body {
     padding: 0;
 }
 
-/* Container centré */
+/* Centrage global */
 .container, .home-container {
     max-width: 800px;
     margin: 50px auto;
@@ -32,11 +32,18 @@ p {
     font-size: 18px;
 }
 
-/* Boutons stylisés */
+/* Boutons stylisés et centrés */
+.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
 .btn {
     display: inline-block;
     padding: 12px 24px;
-    margin: 10px;
     font-size: 16px;
     color: #fff;
     background-color: #ff4b5c;
@@ -53,7 +60,7 @@ p {
     transform: scale(1.05);
 }
 
-/* Administration / messages */
+/* Messages */
 .messages {
     margin: 20px 0;
     padding: 10px;
@@ -70,26 +77,5 @@ a {
 
 a:hover {
     text-decoration: underline;
-}
-/* Header */
-.site-header {
-    background-color: #1c1c1c;
-    padding: 10px 0;
-    border-bottom: 2px solid #ff4b5c;
-}
-
-.site-title {
-    color: #ff4b5c;
-    font-size: 28px;
-    margin: 0;
-}
-
-.nav-links {
-    text-align: right;
-}
-
-.nav-links .btn {
-    margin-right: 20px;
-    margin-top: 5px;
 }
 
