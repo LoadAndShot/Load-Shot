@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
@@ -7,18 +7,13 @@
     <h1>Bienvenue sur Load&Shot, {{ request.user.username }} !</h1>
 
     {% if request.user.can_access_catalogue1 or request.user.can_access_catalogue2 %}
-        <div class="buttons">
-            <a class="btn" href="{% url 'dashboard' %}">Passer une commande</a>
-        </div>
+        <a class="btn" href="{% url 'dashboard' %}">Passer une commande</a>
     {% else %}
         <p>Accès au catalogue verrouillé. Contactez un admin.</p>
     {% endif %}
 
-    <div class="buttons">
-        {% if request.user.is_staff %}
-            <a class="btn" href="/admin/">Accéder à l'administration</a>
-        {% endif %}
-        <a class="btn" href="{% url 'logout' %}">Se déconnecter</a>
-    </div>
+    {% if request.user.is_staff %}
+        <a class="btn" href="/admin/">Accéder à l'administration</a>
+    {% endif %}
 </div>
 {% endblock %}
