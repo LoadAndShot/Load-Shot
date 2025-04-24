@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Load&Shot</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <div class="navbar">
+    {% if user.is_authenticated %}
+        <span class="welcome-msg">Bienvenue, {{ user.username }}</span>
+        <a href="{% url 'view_cart' %}" class="btn">Mon panier 🛒</a>
+        <a href="{% url 'logout' %}" class="btn logout-btn">Déconnexion</a>
+    {% endif %}
+</div>
+
 </head>
 <body>
     <!-- Bouton retour en haut à gauche -->
