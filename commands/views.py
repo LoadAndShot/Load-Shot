@@ -39,6 +39,10 @@ def confirm_order(request):
     if not cart:
         messages.error(request, "Votre panier est vide.")
         return redirect('dashboard')
+        from django.shortcuts import render
+
+def dashboard(request):
+    return render(request, 'dashboard.html'
 
     if request.method == 'POST':
         total_price = sum(item['quantity'] * item['price'] for item in cart)
