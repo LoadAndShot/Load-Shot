@@ -3,8 +3,13 @@ import requests
 
 def get_channel_ids():
     try:
-        channel_legal = int(os.getenv('CHANNEL_LEGAL_ID'))
-        channel_illegal = int(os.getenv('CHANNEL_ILLEGAL_ID'))
+        CHANNEL_LEGAL_ID = int(os.getenv('DISCORD_LEGAL_CHANNEL_ID'))
+CHANNEL_ILLEGAL_ID = int(os.getenv('DISCORD_ILLEGAL_CHANNEL_ID'))
+LEGAL_WEBHOOK = os.getenv('DISCORD_LEGAL_WEBHOOK')
+ILLEGAL_WEBHOOK = os.getenv('DISCORD_ILLEGAL_WEBHOOK')
+DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
+GUILD_ID = int(os.getenv('DISCORD_GUILD_ID'))
+
         return channel_legal, channel_illegal
     except (TypeError, ValueError):
         raise Exception("❌ Les variables d'environnement CHANNEL_LEGAL_ID ou CHANNEL_ILLEGAL_ID sont manquantes ou incorrectes !")
