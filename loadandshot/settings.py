@@ -1,12 +1,15 @@
 import os
-import dj_database_url
 from pathlib import Path
+import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()  # Charge .env si tu bosses en local
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'fallback-secret-key')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']  # À adapter si tu veux restreindre
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -31,25 +34,30 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'loadandshot.urls'
-TEMPLATES = [{
-    'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'DIRS': [BASE_DIR / 'templates'],  # <- bien ce chemin là ?
-    'APP_DIRS': True,
-    'OPTIONS': {
-        'context_processors': [
-            'django.template.context_processors.debug',
-            'django.template.context_processors.request',
-            'django.contrib.auth.context_processors.auth',
-            'django.contrib.messages.context_processors.messages',
-        ],
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
     },
-}]
+]
 
 WSGI_APPLICATION = 'loadandshot.wsgi.application'
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
 }
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -64,21 +72,11 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # ← ajoute ça !
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# ... tout le reste de ton fichier settings.py ...
 
-# Spécifie que tu utilises ton CustomUser
-AUTH_USER_MODEL = 'accounts.CustomUser'
-# Redirection par défaut vers la page de login si pas connecté
-LOGIN_URL = 'login'
-DEBUG = True
-# Webhooks Discord pour notifications
-DISCORD_LEGAL_WEBHOOK = os.getenv('DISCORD_LEGAL_WEBHOOK')
-DISCORD_ILLEGAL_WEBHOOK = os.getenv('DISCORD_ILLEGAL_WEBHOOK')
 
 
 
