@@ -102,3 +102,24 @@ a:hover {
     right: 20px;
     z-index: 999;
 }
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.cart-table th, .cart-table td {
+    border: 1px solid #ff4b5c;
+    padding: 10px;
+    text-align: center;
+}
+
+.cart-table th {
+    background-color: #1e1e1e;
+    color: #ff4b5c;
+}
+
+.total-price {
+    font-size: 20px;
+    margin-top: 20px;
+}
