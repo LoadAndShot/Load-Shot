@@ -15,8 +15,13 @@ def send_order_notification(username, cart, total_price):
 load_dotenv()
 
 TOKEN = os.getenv('DISCORD_BOT_TOKEN')
-CHANNEL_LEGAL_ID = int(os.getenv('CHANNEL_LEGAL_ID'))
-CHANNEL_ILLEGAL_ID = int(os.getenv('CHANNEL_ILLEGAL_ID'))
+def get_channel_ids():
+    try:
+        channel_legal = int(os.getenv('CHANNEL_LEGAL_ID'))
+        channel_illegal = int(os.getenv('CHANNEL_ILLEGAL_ID'))
+        return channel_legal, channel_illegal
+    except (TypeError, ValueError):
+        raise Exception("Les variables d'environnement CHANNEL_LEGAL_ID ou CHANNEL_ILLEGAL_ID sont manquantes ou incorrectes !")
 
 # Rôles à mentionner
 ROLE_LEGAL = '<@&ID_ROLE_TROTRO>'
