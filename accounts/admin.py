@@ -1,41 +1,36 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
-from django.utils.translation import gettext_lazy as _
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'can_access_catalogue1', 'can_access_catalogue2', 'is_staff', 'is_active')
-    list_filter = ('is_staff', 'is_active', 'can_access_catalogue1', 'can_access_catalogue2')
+    list_display = ('username', 'email', 'is_staff', 'can_access_catalogue1', 'can_access_catalogue2')
+    list_filter = ('is_staff', 'is_superuser', 'can_access_catalogue1', 'can_access_catalogue2')
     search_fields = ('username', 'email')
     ordering = ('username',)
     fieldsets = (
-        (None, {'fields': ('username', 'email', 'password', 'phone_number')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-        (_('Catalogue Access'), {'fields': ('can_access_catalogue1', 'can_access_catalogue2')}),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+        (None, {'fields': ('username', 'password', 'email', 'phone_number')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions', 'can_access_catalogue1', 'can_access_catalogue2')}),
+        ('Dates', {'fields': ('last_login', 'date_joined')}),
     )
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('username', 'email', 'password1', 'password2', 'phone_number', 'can_access_catalogue1', 'can_access_catalogue2', 'is_staff', 'is_active')}
-        ),
-    )
+    actions = ['unlock_catalogue1_for_all', 'lock_catalogue1_for_all', 'unlock_catalogue2_for_all', 'lock_catalogue2_for_all']
 
-    actions = ['unlock_catalogue1', 'lock_catalogue1', 'unlock_catalogue2', 'lock_catalogue2']
-
-    @admin.action(description="Déverrouiller l'accès au Catalogue 1 pour tous les utilisateurs")
-    def unlock_catalogue1(self, request, queryset):
+    @admin.action(description='Déverrouiller Catalogue 1 pour TOUS les utilisateurs')
+    def unlock_catalogue1_for_all(self, request, queryset):
         CustomUser.objects.update(can_access_catalogue1=True)
+        self.message_user(request, "Catalogue 1 déverrouillé pour tous les utilisateurs.")
 
-    @admin.action(description="Verrouiller l'accès au Catalogue 1 pour tous les utilisateurs")
-    def lock_catalogue1(self, request, queryset):
+    @admin.action(description='Verrouiller Catalogue 1 pour TOUS les utilisateurs')
+    def lock_catalogue1_for_all(self, request, queryset):
         CustomUser.objects.update(can_access_catalogue1=False)
+        self.message_user(request, "Catalogue 1 verrouillé pour tous les utilisateurs.")
 
-    @admin.action(description="Déverrouiller l'accès au Catalogue 2 pour tous les utilisateurs")
-    def unlock_catalogue2(self, request, queryset):
+    @admin.action(description='Déverrouiller Catalogue 2 pour TOUS les utilisateurs')
+    def unlock_catalogue2_for_all(self, request, queryset):
         CustomUser.objects.update(can_access_catalogue2=True)
+        self.message_user(request, "Catalogue 2 déverrouillé pour tous les utilisateurs.")
 
-    @admin.action(description="Verrouiller l'accès au Catalogue 2 pour tous les utilisateurs")
-    def lock_catalogue2(self, request, queryset):
+    @admin.action(description='Verrouiller Catalogue 2 pour TOUS les utilisateurs')
+    def lock_catalogue2_for_all(self, request, queryset):
         CustomUser.objects.update(can_access_catalogue2=False)
+        self.message_user(request, "Catalogue 2 verrouillé pour tous les utilisateurs.")
