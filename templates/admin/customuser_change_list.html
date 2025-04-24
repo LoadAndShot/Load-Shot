@@ -1,0 +1,25 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools-items %}
+    <li>
+        <a class="button" href="{% url 'admin:unlock_catalogue1' %}">
+            ✅ Déverrouiller Catalogue 1 (Légal)
+        </a>
+    </li>
+    <li>
+        <a class="button" href="{% url 'admin:lock_catalogue1' %}">
+            🔒 Verrouiller Catalogue 1 (Légal)
+        </a>
+    </li>
+    <li>
+        <a class="button" href="{% url 'admin:unlock_catalogue2' %}">
+            ✅ Déverrouiller Catalogue 2 (Spécial)
+        </a>
+    </li>
+    <li>
+        <a class="button" href="{% url 'admin:lock_catalogue2' %}">
+            🔒 Verrouiller Catalogue 2 (Spécial)
+        </a>
+    </li>
+    {{ block.super }}
+{% endblock %}
