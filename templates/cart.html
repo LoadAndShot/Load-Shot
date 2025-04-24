@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1>🛒 Mon panier</h1>
+
+    {% if cart %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire (€)</th>
+                    <th>Méthode de livraison</th>
+                    <th>Numéro IG</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.product_name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.delivery_method }}</td>
+                    <td>{{ item.phone_number }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p class="total-price"><strong>Prix total :</strong> {{ total_price }} €</p>
+
+        <form method="post" action="{% url 'confirm_order' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn">✅ Valider la commande</button>
+        </form>
+    {% else %}
+        <p>Votre panier est vide.</p>
+    {% endif %}
+
+    <a href="{% url 'dashboard' %}" class="btn">Retour au tableau de bord</a>
+</div>
+{% endblock %}
