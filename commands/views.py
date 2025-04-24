@@ -21,6 +21,12 @@ def catalogue2(request):
 @login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+
+    # Si GET → Affiche le formulaire
+    if request.method == 'GET':
+        return render(request, 'add_to_cart.html', {'product': product})
+
+    # Si POST → Ajoute au panier
     if request.method == 'POST':
         quantity = int(request.POST['quantity'])
         delivery_method = request.POST['delivery_method']
