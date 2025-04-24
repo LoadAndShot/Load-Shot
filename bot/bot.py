@@ -1,7 +1,15 @@
 import os
 import discord
+import requests
 from discord.ext import commands
 from dotenv import load_dotenv
+from django.conf import settings
+
+def send_order_notification(username, cart, total_price):
+    product_list = "\n".join([f"- {item['product_name']} x{item['quantity']} ({item['delivery_method']})" for item in cart])
+    message = f"Nouvelle commande par {username} :\n{product_list}\nPrix total : {total_price:.2f}€"
+    payload = {"content": message}
+    requests.post(settings.DISCORD_WEBHOOK_URL, json=payload)
 
 # Charge les variables d'environnement depuis .env ou Render
 load_dotenv()
