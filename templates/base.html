@@ -8,8 +8,14 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+    <!-- Bouton retour en haut à gauche -->
     <div class="return-button">
         <a href="#" onclick="history.back();" class="btn">Retour</a>
+    </div>
+
+    <!-- Bouton déconnexion en haut à droite -->
+    <div class="logout-button">
+        <a href="{% url 'logout' %}" class="btn">Se déconnecter</a>
     </div>
 
     {% block content %}
