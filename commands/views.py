@@ -5,6 +5,20 @@ from django.contrib import messages
 from bot.bot import send_order_notification
 
 @login_required
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
+@login_required
+def catalogue1(request):
+    products = Product.objects.filter(catalogue=1)
+    return render(request, 'catalogue1.html', {'products': products})
+
+@login_required
+def catalogue2(request):
+    products = Product.objects.filter(catalogue=2)
+    return render(request, 'catalogue2.html', {'products': products})
+
+@login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if request.method == 'POST':
@@ -39,10 +53,6 @@ def confirm_order(request):
     if not cart:
         messages.error(request, "Votre panier est vide.")
         return redirect('dashboard')
-        from django.shortcuts import render
-
-def dashboard(request):
-    return render(request, 'dashboard.html')
 
     if request.method == 'POST':
         total_price = sum(item['quantity'] * item['price'] for item in cart)
@@ -59,6 +69,9 @@ def dashboard(request):
         request.session['cart'] = []
         messages.success(request, "Commande confirmée et envoyée !")
         return redirect('dashboard')
+
+    total_price = sum(item['quantity'] * item['price'] for item in cart)
+    return render(request, 'confirm_order.html', {'cart': cart, 'total_price': total_price})
 
     total_price = sum(item['quantity'] * item['price'] for item in cart)
     return render(request, 'confirm_order.html', {'cart': cart, 'total_price': total_price})
