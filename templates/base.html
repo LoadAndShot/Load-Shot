@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="return-button">
-        <button onclick="history.back()">Retour</button>
+        <a href="#" onclick="history.back();" class="btn">Retour</a>
     </div>
 
     {% block content %}
@@ -22,16 +22,20 @@
             left: 20px;
             z-index: 999;
         }
-        .return-button button {
+        /* Si ce n'est pas déjà dans ton style.css, ajoute-le là-bas pour centraliser */
+        .btn {
             background-color: #222;
             border: 2px solid #ff0000;
             color: #ff0000;
-            padding: 8px 16px;
+            padding: 10px 20px;
             border-radius: 12px;
             cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
             transition: all 0.3s ease;
+            font-weight: bold;
         }
-        .return-button button:hover {
+        .btn:hover {
             box-shadow: 0 0 8px #ff0000;
             background-color: #333;
         }
