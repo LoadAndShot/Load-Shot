@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Product, Order
 from django.contrib import messages
+from .models import Product, Order
 from bot.bot import send_order_notification
 
 @login_required
@@ -21,12 +21,6 @@ def catalogue2(request):
 @login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-
-    # Si GET → Affiche le formulaire
-    if request.method == 'GET':
-        return render(request, 'add_to_cart.html', {'product': product})
-
-    # Si POST → Ajoute au panier
     if request.method == 'POST':
         quantity = int(request.POST['quantity'])
         delivery_method = request.POST['delivery_method']
@@ -60,8 +54,9 @@ def confirm_order(request):
         messages.error(request, "Votre panier est vide.")
         return redirect('dashboard')
 
+    total_price = sum(item['quantity'] * item['price'] for item in cart)
+
     if request.method == 'POST':
-        total_price = sum(item['quantity'] * item['price'] for item in cart)
         for item in cart:
             product = get_object_or_404(Product, id=item['product_id'])
             Order.objects.create(
@@ -69,6 +64,7 @@ def confirm_order(request):
                 product=product,
                 quantity=item['quantity'],
                 phone_number=item['phone_number'],
+                delivery_method=item['delivery_method'],
                 is_delivered=False
             )
         send_order_notification(request.user.username, cart, total_price)
@@ -76,8 +72,5 @@ def confirm_order(request):
         messages.success(request, "Commande confirmée et envoyée !")
         return redirect('dashboard')
 
-    total_price = sum(item['quantity'] * item['price'] for item in cart)
     return render(request, 'confirm_order.html', {'cart': cart, 'total_price': total_price})
 
-    total_price = sum(item['quantity'] * item['price'] for item in cart)
-    return render(request, 'confirm_order.html', {'cart': cart, 'total_price': total_price})
