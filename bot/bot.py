@@ -1,57 +1,43 @@
 import os
-import discord
 import requests
-from discord.ext import commands
-from dotenv import load_dotenv
-from django.conf import settings
 
-def send_order_notification(username, cart, total_price):
-    product_list = "\n".join([f"- {item['product_name']} x{item['quantity']} ({item['delivery_method']})" for item in cart])
-    message = f"Nouvelle commande par {username} :\n{product_list}\nPrix total : {total_price:.2f}€"
-    payload = {"content": message}
-    requests.post(settings.DISCORD_WEBHOOK_URL, json=payload)
-
-# Charge les variables d'environnement depuis .env ou Render
-load_dotenv()
-
-TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 def get_channel_ids():
     try:
         channel_legal = int(os.getenv('CHANNEL_LEGAL_ID'))
         channel_illegal = int(os.getenv('CHANNEL_ILLEGAL_ID'))
         return channel_legal, channel_illegal
     except (TypeError, ValueError):
-        raise Exception("Les variables d'environnement CHANNEL_LEGAL_ID ou CHANNEL_ILLEGAL_ID sont manquantes ou incorrectes !")
+        raise Exception("❌ Les variables d'environnement CHANNEL_LEGAL_ID ou CHANNEL_ILLEGAL_ID sont manquantes ou incorrectes !")
 
-# Rôles à mentionner
-ROLE_LEGAL = '<@&ID_ROLE_TROTRO>'
-ROLE_ILLEGAL = '<@&ID_ROLE_ALADIN>'
+def send_order_notification(order, is_illegal=False, total_price=0):
+    webhook_url = os.getenv('DISCORD_WEBHOOK_LEGAL') if not is_illegal else os.getenv('DISCORD_WEBHOOK_ILLEGAL')
+    mention = "@TroTro" if not is_illegal else "@AladindeAuCurry"
+    
+    if not webhook_url:
+        raise Exception("❌ Le webhook Discord n'est pas configuré correctement dans les variables d'environnement.")
 
-# Configuration du bot
-intents = discord.Intents.default()
-intents.message_content = True
-bot = commands.Bot(command_prefix='!', intents=intents)
+    product_name = order.product.name
+    quantity = order.quantity
+    delivery_method = order.delivery_method
+    phone_number = order.phone_number
 
-@bot.event
-async def on_ready():
-    print(f'Bot connecté en tant que {bot.user}')
+    message = (
+        f"📦 Nouvelle commande {'ILLÉGALE' if is_illegal else 'légale'} !\n"
+        f"👤 Client : {order.user.username}\n"
+        f"🛒 Produit : {product_name}\n"
+        f"🔢 Quantité : {quantity}\n"
+        f"🚚 Méthode : {delivery_method}\n"
+        f"📱 Numéro IG : {phone_number}\n"
+        f"💶 Prix total : {total_price} €\n"
+        f"🔔 Mention : {mention}"
+    )
 
-# Fonction d’envoi des messages depuis Django
-async def send_order_notification(catalogue, product_name, quantity, username):
-    channel_id = CHANNEL_LEGAL_ID if catalogue == 1 else CHANNEL_ILLEGAL_ID
-    role_mention = ROLE_LEGAL if catalogue == 1 else ROLE_ILLEGAL
+    payload = {
+        "content": message
+    }
 
-    channel = bot.get_channel(channel_id)
-    if channel:
-        message = (
-            f"🛒 Nouvelle commande par **{username}**\n"
-            f"Produit : **{product_name}**\n"
-            f"Quantité : **{quantity}**\n"
-            f"{role_mention} tu es concerné !"
-        )
-        await channel.send(message)
-
-# Lance le bot
-if __name__ == '__main__':
-    bot.run(TOKEN)
-
+    try:
+        response = requests.post(webhook_url, json=payload)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"❌ Erreur lors de l'envoi du message Discord : {e}")
