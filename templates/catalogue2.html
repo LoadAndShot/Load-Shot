@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
-{% load static %}
-
 {% block content %}
 <div class="container">
-    <h1>Catalogue 2</h1>
-    {% for product in products %}
-        <div>
-            <h3>{{ product.name }}</h3>
-            <p>{{ product.description }}</p>
-            <a class="btn" href="{% url 'place_order' product.id %}">Commander</a>
+    <h1>Catalogue Produits</h1>
+    {% if products %}
+        <div class="product-list">
+            {% for product in products %}
+                <div class="product-item">
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.description }}</p>
+                    <p><strong>Prix :</strong> {{ product.price }} €</p>
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn">Commander</a>
+                </div>
+            {% endfor %}
         </div>
-    {% empty %}
-        <p>Aucun produit disponible.</p>
-    {% endfor %}
-    <a class="btn" href="{% url 'dashboard' %}">Retour</a>
+    {% else %}
+        <p>Aucun produit disponible pour le moment.</p>
+    {% endif %}
+    <a href="{% url 'dashboard' %}" class="btn">Retour au tableau de bord</a>
 </div>
 {% endblock %}
-
