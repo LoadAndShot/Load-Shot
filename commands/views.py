@@ -46,6 +46,19 @@ def view_cart(request):
     cart = request.session.get('cart', [])
     total_price = sum(item['quantity'] * item['price'] for item in cart)
     return render(request, 'cart.html', {'cart': cart, 'total_price': total_price})
+    @login_required
+def remove_from_cart(request, index):
+    cart = request.session.get('cart', [])
+    
+    try:
+        removed_item = cart.pop(index)
+        request.session['cart'] = cart  # Update le panier après suppression
+        messages.success(request, f"Produit '{removed_item['product_name']}' retiré du panier.")
+    except IndexError:
+        messages.error(request, "Produit introuvable dans le panier.")
+
+    return redirect('view_cart')
+
 
 @login_required
 def confirm_order(request):
