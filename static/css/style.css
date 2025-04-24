@@ -95,3 +95,10 @@ a {
 a:hover {
     text-decoration: underline;
 }
+/* Bouton déconnexion (en haut à droite) */
+.logout-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+}
