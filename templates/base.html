@@ -8,18 +8,33 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="navbar">
-        {% if request.user.is_authenticated %}
-            <span class="welcome-msg">Bienvenue, {{ request.user.username }}</span>
-            <a class="btn logout-btn" href="{% url 'logout' %}">Se déconnecter</a>
-        {% endif %}
+    <div class="return-button">
+        <button onclick="history.back()">Retour</button>
     </div>
 
     {% block content %}
     {% endblock %}
-    <!-- Bouton retour global -->
-<div class="back-button-container">
-    <a href="javascript:history.back()" class="btn btn-back">Retour</a>
-</div>
+
+    <style>
+        .return-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+        }
+        .return-button button {
+            background-color: #222;
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .return-button button:hover {
+            box-shadow: 0 0 8px #ff0000;
+            background-color: #333;
+        }
+    </style>
 </body>
 </html>
