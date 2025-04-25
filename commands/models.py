@@ -13,6 +13,16 @@ CATEGORY_CHOICES = [
 ]
 
 class Product(models.Model):
+    CATEGORY_CHOICES = [
+        ('arme_de_poing', 'Arme de poing'),
+        ('pistolet_mitrailleur', 'Pistolet mitrailleur'),
+        ('fusil_d_assaut', 'Fusil d\'assaut'),
+        ('fusil_a_pompe', 'Fusil à pompe'),
+        ('fusil_sniper', 'Fusil sniper'),
+        ('protection', 'Protection'),
+        ('munitions', 'Munitions'),
+    ]
+
     name = models.CharField(max_length=100)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -21,7 +31,6 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.get_category_display()})"
-
 class Order(models.Model):
     DELIVERY_CHOICES = [
         ('livraison', 'Livraison'),
