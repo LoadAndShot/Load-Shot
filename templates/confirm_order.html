@@ -22,9 +22,9 @@
             {% endfor %}
         </table>
         <p><strong>Prix total :</strong> {{ total_price }} €</p>
-        <form method="post">
+        <form method="post" action="{% url 'confirm_order' %}">
             {% csrf_token %}
-            <button type="submit" class="btn">Confirmer la commande</button>
+            <button type="submit" class="btn">✅ Confirmer la commande</button>
         </form>
     {% else %}
         <p>Votre panier est vide.</p>
