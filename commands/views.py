@@ -11,18 +11,13 @@ def dashboard(request):
 @login_required
 def catalogue1(request):
     products = Product.objects.filter(catalogue=1)
-    categories = {}
-    for product in products:
-        categories.setdefault(product.category, []).append(product)
-    return render(request, 'catalogue1.html', {'categories': categories})
-
+    categories = Product.CATEGORY_CHOICES
+    return render(request, 'catalogue1.html', {'products': products, 'categories': categories})
 @login_required
 def catalogue2(request):
     products = Product.objects.filter(catalogue=2)
-    categories = {}
-    for product in products:
-        categories.setdefault(product.category, []).append(product)
-    return render(request, 'catalogue2.html', {'categories': categories})
+    categories = Product.CATEGORY_CHOICES
+    return render(request, 'catalogue2.html', {'products': products, 'categories': categories})
 
 @login_required
 def add_to_cart(request, product_id):
