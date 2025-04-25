@@ -3,11 +3,10 @@ from .models import Product, Order
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price')
+    list_display = ('name', 'price', 'catalogue', 'category')
+    list_filter = ('catalogue', 'category')
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('user', 'product', 'quantity', 'is_delivered', 'created_at')  # plus de 'client' ni 'delivery_method'
-    list_filter = ('is_delivered',)  # supprime 'delivery_method'
-    search_fields = ('user__username', 'product__name')
-
+    list_display = ('user', 'product', 'quantity', 'delivery_method', 'is_delivered', 'created_at')
+    list_filter = ('is_delivered',)
