@@ -7,8 +7,8 @@ class Product(models.Model):
     CATEGORY_CHOICES = [
         ('arme_de_poing', 'Arme de poing'),
         ('pistolet_mitrailleur', 'Pistolet mitrailleur'),
-        ('fusil_assaut', 'Fusil d’assaut'),
-        ('fusil_pompe', 'Fusil à pompe'),
+        ('fusil_d_assaut', 'Fusil d\'assaut'),
+        ('fusil_a_pompe', 'Fusil à pompe'),
         ('fusil_sniper', 'Fusil sniper'),
     ]
 
@@ -16,7 +16,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     catalogue = models.IntegerField()  # 1 = légal, 2 = illégal
-    category = models.CharField(max_length=30, choices=CATEGORY_CHOICES, default='arme_de_poing')  # <-- Ici la nouvelle colonne
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
 
     def __str__(self):
         return self.name
