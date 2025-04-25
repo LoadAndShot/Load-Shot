@@ -12,22 +12,22 @@
                     <th>Prix unitaire (€)</th>
                     <th>Méthode de livraison</th>
                     <th>Numéro IG</th>
+                    <th>Action</th> <!-- ✅ Manquait ici -->
                 </tr>
             </thead>
             <tbody>
-               {% for item in cart %}
-<tr>
-    <td>{{ item.product_name }}</td>
-    <td>{{ item.quantity }}</td>
-    <td>{{ item.price }}</td>
-    <td>{{ item.delivery_method }}</td>
-    <td>{{ item.phone_number }}</td>
-    <td>
-        <a href="{% url 'remove_from_cart' forloop.counter0 %}" class="btn">Supprimer</a>
-    </td>
-</tr>
-{% endfor %}
-
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.product_name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.delivery_method }}</td>
+                    <td>{{ item.phone_number }}</td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' forloop.counter0 %}" class="btn">❌ Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
 
