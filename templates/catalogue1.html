@@ -1,21 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h1>Catalogue Produits</h1>
+    <h1>💼 Catalogue Légal</h1>
+
     {% if products %}
-        <div class="product-list">
-            {% for product in products %}
-                <div class="product-item">
-                    <h2>{{ product.name }}</h2>
-                    <p>{{ product.description }}</p>
-                    <p><strong>Prix :</strong> {{ product.price }} €</p>
-                    <a href="{% url 'add_to_cart' product.id %}" class="btn">Commander</a>
-                </div>
-            {% endfor %}
-        </div>
+        {% for category, category_display in category_choices %}
+            <h2 class="category-title">{{ category_display }}</h2>
+            <div class="product-list">
+                {% for product in products %}
+                    {% if product.category == category %}
+                        <div class="product-item">
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.description }}</p>
+                            <p><strong>Prix :</strong> {{ product.price }} €</p>
+                            <a href="{% url 'add_to_cart' product.id %}" class="btn">Commander</a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
     {% else %}
         <p>Aucun produit disponible pour le moment.</p>
     {% endif %}
+
     <a href="{% url 'dashboard' %}" class="btn">Retour au tableau de bord</a>
 </div>
 {% endblock %}
