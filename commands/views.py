@@ -98,3 +98,4 @@ def confirm_order(request):
         return redirect('dashboard')
 
     return render(request, 'confirm_order.html', {'cart': cart, 'total_price': total_price})
+
