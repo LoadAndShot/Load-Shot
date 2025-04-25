@@ -69,44 +69,26 @@ def confirm_order(request):
 
     total_price = sum(item['quantity'] * item['price'] for item in cart)
 
+    # DEBUG : Check si on reçoit bien le POST
+    print("METHOD:", request.method)
+
     if request.method == 'POST':
-        try:
-            orders = []
-            for item in cart:
-                product = get_object_or_404(Product, id=item['product_id'])
-                order = Order.objects.create(
-                    user=request.user,
-                    product=product,
-                    quantity=item['quantity'],
-                    phone_number=item['phone_number'],
-                    delivery_method=item['delivery_method'],
-                    is_delivered=False
-                )
-                orders.append(order)
-
-            # Ici on convertit bien le panier pour la notif Discord :
-            cart_for_discord = [
-                {
-                    "product_name": item['product_name'],
-                    "quantity": item['quantity'],
-                    "price": item['price'],
-                    "delivery_method": item['delivery_method'],
-                    "phone_number": item['phone_number']
-                } for item in cart
-            ]
-            print("DEBUG : Envoi de la commande à Discord")
-
-            # ✅ Envoi de la notif Discord avec le prix total
-            send_order_notification(request.user.username, cart_for_discord, total_price)
-
-            # Vide le panier après la commande
-            request.session['cart'] = []
-            messages.success(request, "Commande confirmée et envoyée avec succès !")
-            return redirect('dashboard')
-        except Exception as e:
-            messages.error(request, f"Une erreur est survenue lors de la validation de la commande : {e}")
-            return redirect('view_cart')
+        print("POST detected, processing order...")
+        for item in cart:
+            product = get_object_or_404(Product, id=item['product_id'])
+            Order.objects.create(
+                user=request.user,
+                product=product,
+                quantity=item['quantity'],
+                phone_number=item['phone_number'],
+                delivery_method=item['delivery_method'],
+                is_delivered=False
+            )
+        # Message Discord
+        send_order_notification(request.user.username, cart, total_price)
+        # Vider le panier
+        request.session['cart'] = []
+        messages.success(request, "Commande confirmée et envoyée !")
+        return redirect('dashboard')
 
     return render(request, 'confirm_order.html', {'cart': cart, 'total_price': total_price})
-
-
