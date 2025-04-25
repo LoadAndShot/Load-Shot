@@ -94,6 +94,7 @@ def confirm_order(request):
                     "phone_number": item['phone_number']
                 } for item in cart
             ]
+            print("DEBUG : Envoi de la commande à Discord")
 
             # ✅ Envoi de la notif Discord avec le prix total
             send_order_notification(request.user.username, cart_for_discord, total_price)
