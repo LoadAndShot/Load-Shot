@@ -69,11 +69,8 @@ def confirm_order(request):
 
     total_price = sum(item['quantity'] * item['price'] for item in cart)
 
-    # DEBUG : Check si on reçoit bien le POST
-    print("METHOD:", request.method)
-
     if request.method == 'POST':
-        print("POST detected, processing order...")
+        print("DEBUG: Creating orders...")
         for item in cart:
             product = get_object_or_404(Product, id=item['product_id'])
             Order.objects.create(
@@ -84,9 +81,18 @@ def confirm_order(request):
                 delivery_method=item['delivery_method'],
                 is_delivered=False
             )
-        # Message Discord
-        send_order_notification(request.user.username, cart, total_price)
-        # Vider le panier
+        print("DEBUG: Orders created successfully!")
+        print(f"DEBUG: Sending order notification with total_price {total_price}...")
+
+        # Ajoute ce bloc pour debug la fonction de notification
+        try:
+            send_order_notification(request.user.username, cart, total_price)
+            print("DEBUG: Notification sent successfully!")
+        except Exception as e:
+            print(f"ERROR sending notification: {e}")
+            messages.error(request, f"Erreur lors de l'envoi de la notification : {e}")
+            return redirect('view_cart')
+
         request.session['cart'] = []
         messages.success(request, "Commande confirmée et envoyée !")
         return redirect('dashboard')
