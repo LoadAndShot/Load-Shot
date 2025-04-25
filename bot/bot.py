@@ -17,7 +17,7 @@ ILLEGAL_WEBHOOK = os.getenv('DISCORD_ILLEGAL_WEBHOOK')
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-def send_order_notification(is_legal, username, product, quantity, delivery_method, phone_number, total_price):
+def send_order_notification(is_legal, username, cart, product, quantity, delivery_method, phone_number, total_price):
     webhook_url = LEGAL_WEBHOOK if is_legal else ILLEGAL_WEBHOOK
     webhook = SyncWebhook.from_url(webhook_url)
 
