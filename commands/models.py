@@ -4,10 +4,23 @@ from django.db import models
 from django.conf import settings
 
 class Product(models.Model):
+    CATEGORY_CHOICES = [
+        ('arme_de_poing', 'Arme de poing'),
+        ('pistolet_mitrailleur', 'Pistolet mitrailleur'),
+        ('fusil_assaut', 'Fusil d’assaut'),
+        ('fusil_pompe', 'Fusil à pompe'),
+        ('fusil_sniper', 'Fusil sniper'),
+    ]
+
     name = models.CharField(max_length=100)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     catalogue = models.IntegerField()  # 1 = légal, 2 = illégal
+    category = models.CharField(max_length=30, choices=CATEGORY_CHOICES, default='arme_de_poing')  # <-- Ici la nouvelle colonne
+
+    def __str__(self):
+        return self.name
+
 
     def __str__(self):
         return self.name
